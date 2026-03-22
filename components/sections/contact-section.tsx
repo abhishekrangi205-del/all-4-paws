@@ -201,6 +201,19 @@ export function ContactSection() {
   useEffect(() => {
     const supabase = createClient()
     
+    const handleSelectService = (event: CustomEvent<string>) => {
+      setSelectedCategory(event.detail)
+      setStep("select-service")
+    }
+    
+    window.addEventListener("selectService", handleSelectService as EventListener)
+    
+    if (!supabase) {
+      return () => {
+        window.removeEventListener("selectService", handleSelectService as EventListener)
+      }
+    }
+    
     supabase.auth.getUser().then(({ data: { user } }) => {
       setUser(user)
       if (user) {
@@ -222,13 +235,6 @@ export function ContactSection() {
         }))
       }
     })
-    
-    const handleSelectService = (event: CustomEvent<string>) => {
-      setSelectedCategory(event.detail)
-      setStep("select-service")
-    }
-    
-    window.addEventListener("selectService", handleSelectService as EventListener)
     
     return () => {
       subscription.unsubscribe()
@@ -259,6 +265,10 @@ export function ContactSection() {
     
     try {
       const supabase = createClient()
+      
+      if (!supabase) {
+        throw new Error("Supabase is not configured")
+      }
       
       const { error } = await supabase.from("bookings").insert({
         customer_name: formData.customerName,
