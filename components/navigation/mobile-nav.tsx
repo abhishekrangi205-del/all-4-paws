@@ -21,6 +21,7 @@ export function MobileNav() {
   
   useEffect(() => {
     const supabase = createClient()
+    if (!supabase) return
     
     supabase.auth.getUser().then(({ data: { user } }) => {
       setUser(user)
