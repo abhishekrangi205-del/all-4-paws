@@ -4,6 +4,10 @@ import { stripe } from '@/lib/stripe'
 import { SERVICES } from '@/lib/products'
 
 export async function startCheckoutSession(productId: string) {
+  if (!stripe) {
+    throw new Error('Stripe is not configured. Please add STRIPE_SECRET_KEY.')
+  }
+  
   const product = SERVICES.find((p) => p.id === productId)
   if (!product) {
     throw new Error(`Product with id "${productId}" not found`)
