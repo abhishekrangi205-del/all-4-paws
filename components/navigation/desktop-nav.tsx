@@ -88,7 +88,7 @@ export function DesktopNav() {
             </Button>
           )}
           <Button size="lg" className="rounded-full px-6" asChild>
-            <Link href="#book">Book Now</Link>
+            <Link href="/booking">Book Now</Link>
           </Button>
         </div>
       </div>

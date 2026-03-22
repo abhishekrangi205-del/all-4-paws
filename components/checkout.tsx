@@ -12,6 +12,7 @@ const stripePublishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '
 const stripePromise = stripePublishableKey ? loadStripe(stripePublishableKey) : null
 
 export default function Checkout({ productId }: { productId: string }) {
+  // productId can be a single ID or comma-separated list of IDs
   const startCheckoutSessionForProduct = useCallback(
     () => startCheckoutSession(productId),
     [productId],
