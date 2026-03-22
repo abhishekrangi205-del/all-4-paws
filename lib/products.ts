@@ -5,6 +5,7 @@ export interface ServiceProduct {
   priceInCents: number
   category: "pet-day-care" | "pet-boarding" | "grooming" | "teeth-cleaning"
   petSize?: "small" | "large" | "any"
+  isAddOn?: boolean
 }
 
 export const SERVICES: ServiceProduct[] = [
@@ -196,6 +197,7 @@ export const SERVICES: ServiceProduct[] = [
     priceInCents: 2500,
     category: "grooming",
     petSize: "any",
+    isAddOn: true,
   },
   
   // Grooming - Bath Only
@@ -306,6 +308,7 @@ export const SERVICES: ServiceProduct[] = [
     priceInCents: 500,
     category: "grooming",
     petSize: "any",
+    isAddOn: true,
   },
   {
     id: "grooming-addon-medicated",
@@ -314,6 +317,7 @@ export const SERVICES: ServiceProduct[] = [
     priceInCents: 500,
     category: "grooming",
     petSize: "any",
+    isAddOn: true,
   },
   {
     id: "grooming-addon-deshedding",
@@ -322,6 +326,7 @@ export const SERVICES: ServiceProduct[] = [
     priceInCents: 1000,
     category: "grooming",
     petSize: "any",
+    isAddOn: true,
   },
   {
     id: "grooming-addon-deskunk",
@@ -330,6 +335,7 @@ export const SERVICES: ServiceProduct[] = [
     priceInCents: 4000,
     category: "grooming",
     petSize: "any",
+    isAddOn: true,
   },
   
   // Teeth Cleaning
@@ -368,7 +374,15 @@ export const SERVICES: ServiceProduct[] = [
 ]
 
 export function getServicesByCategory(category: string) {
-  return SERVICES.filter((service) => service.category === category)
+  return SERVICES.filter((service) => service.category === category && !service.isAddOn)
+}
+
+export function getAddOns() {
+  return SERVICES.filter((service) => service.isAddOn)
+}
+
+export function getMainServices() {
+  return SERVICES.filter((service) => !service.isAddOn)
 }
 
 export function formatPrice(priceInCents: number) {

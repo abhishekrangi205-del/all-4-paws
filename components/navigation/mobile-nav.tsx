@@ -12,7 +12,7 @@ const navItems = [
   { href: "#services", label: "Services", icon: Scissors },
   { href: "#gallery", label: "Gallery", icon: Images },
   { href: "#about", label: "About", icon: Info },
-  { href: "#book", label: "Book", icon: Calendar },
+  { href: "/booking", label: "Book", icon: Calendar, isLink: true },
 ]
 
 export function MobileNav() {
@@ -46,16 +46,27 @@ export function MobileNav() {
   return (
     <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-md border-t border-border pb-safe">
       <div className="flex items-center justify-around py-3 px-2">
-        {navItems.map((item) => (
-          <button
-            key={item.href}
-            onClick={(e) => handleNavClick(e, item.href)}
-            className="flex flex-col items-center gap-1 py-2 px-3 text-muted-foreground hover:text-primary active:text-primary transition-colors touch-manipulation"
-          >
-            <item.icon className="w-5 h-5" />
-            <span className="text-[10px] font-medium">{item.label}</span>
-          </button>
-        ))}
+        {navItems.map((item) => 
+          'isLink' in item && item.isLink ? (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="flex flex-col items-center gap-1 py-2 px-3 text-primary hover:text-primary/80 transition-colors touch-manipulation"
+            >
+              <item.icon className="w-5 h-5" />
+              <span className="text-[10px] font-medium">{item.label}</span>
+            </Link>
+          ) : (
+            <button
+              key={item.href}
+              onClick={(e) => handleNavClick(e, item.href)}
+              className="flex flex-col items-center gap-1 py-2 px-3 text-muted-foreground hover:text-primary active:text-primary transition-colors touch-manipulation"
+            >
+              <item.icon className="w-5 h-5" />
+              <span className="text-[10px] font-medium">{item.label}</span>
+            </button>
+          )
+        )}
         {user ? (
           <Link
             href="/account"

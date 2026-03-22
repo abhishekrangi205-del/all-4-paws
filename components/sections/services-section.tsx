@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 import { Sun, Home, Scissors, Sparkles, ChevronDown, Check, ArrowRight } from "lucide-react"
 
 export const services = [
@@ -158,14 +159,9 @@ function ServiceCard({
   const hasGroomingCards = "groomingCards" in service && service.groomingCards
   const isHighlighted = "isHighlighted" in service && service.isHighlighted
 
-  const handleBookNow = (e: React.MouseEvent) => {
-    e.stopPropagation()
-    const bookingSection = document.getElementById("contact")
-    if (bookingSection) {
-      bookingSection.scrollIntoView({ behavior: "smooth" })
-    }
-    // Dispatch custom event to set the service in the booking form
-    window.dispatchEvent(new CustomEvent("selectService", { detail: service.value }))
+  const getCategoryParam = () => {
+    // Map service value to booking page category filter
+    return service.value
   }
 
   return (
@@ -363,13 +359,13 @@ function ServiceCard({
             )}
             
             {/* Book Now Button */}
-            <button
-              onClick={handleBookNow}
-              className="mt-6 w-full flex items-center justify-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-full font-medium hover:bg-primary/90 transition-colors cursor-pointer"
+            <Link
+              href={`/booking?category=${getCategoryParam()}`}
+              className="mt-6 w-full flex items-center justify-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-full font-medium hover:bg-primary/90 transition-colors"
             >
               Book {service.title}
               <ArrowRight className="w-4 h-4" />
-            </button>
+            </Link>
           </div>
         </div>
       </div>
